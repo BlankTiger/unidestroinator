@@ -1,0 +1,47 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+@import '~mini.css/dist/mini-nord.css';
+
+body {
+	position: relative;
+	color: white;
+	height: 100vh;
+	background: linear-gradient(120.96deg, #c31432, #240b36);
+	overflow-y: hidden;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#videoPreview {
+	width: calc(100% / 1.9);
+}
+
+button:hover {
+	transform: scale(1.05);
+}
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	height: fit-content;
+	width: fit-content;
+	margin: 10px;
+}
+
+a:hover {
+	opacity: 1;
+	text-decoration: none;
+}
+
+.App {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 20px 0;
+}
