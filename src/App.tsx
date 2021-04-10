@@ -62,7 +62,16 @@ const App = () => {
 						mandatory: {
 							chromeMediaSource: 'desktop' as MediaTrackConstraints,
 							chromeMediaSourceId: source.id,
+							maxHeight: 720,
+							maxWidth: 1280,
 						},
+						optional: [
+							{ minWidth: 320 },
+							{ minWidth: 640 },
+							{ minWidth: 960 },
+							{ minWidth: 1024 },
+							{ minWidth: 1280 },
+						],
 					},
 				};
 
