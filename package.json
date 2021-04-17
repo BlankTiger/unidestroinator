@@ -105,7 +105,14 @@
   "bugs": {
     "url": "https://github.com/BlankTiger/unidestroinator/issues"
   },
-  "keywords": ["remote learning", "remote", "learning", "recording", "record", "lectures"],
+  "keywords": [
+    "remote learning",
+    "remote",
+    "learning",
+    "recording",
+    "record",
+    "lectures"
+  ],
   "homepage": "https://github.com/BlankTiger/unidestroinator",
   "jest": {
     "testURL": "http://localhost/",

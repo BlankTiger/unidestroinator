@@ -13,7 +13,7 @@ const App = () => {
 	const videoRef = useRef<HTMLVideoElement>(null);
 
 	const { desktopCapturer, remote } = require('electron');
-	const { writeFile } = require('fs').promises;
+	const { writeFile, readFile, unlink } = require('fs').promises;
 	const { dialog, Menu } = remote;
 	const webmToMp4 = require('webm-to-mp4');
 	let mediaRecorder: MediaRecorder;
@@ -32,15 +32,25 @@ const App = () => {
 
 		const { filePath } = await dialog.showSaveDialog({
 			buttonLabel: 'Save video',
-			defaultPath: `vid-${Date.now()}.mp4`,
-			filters: [{ name: 'Movies', extensions: ['mp4'] }],
+			defaultPath: `vid-${Date.now()}.webm`,
+			filters: [{ name: 'Movies', extensions: ['webm'] }],
 		});
 
 		if (filePath !== '') {
-			await writeFile(filePath, Buffer.from(webmToMp4(buffer)));
+			await writeFile(filePath, Buffer.from(buffer))
+				.then(async () => {
+					await writeFile(
+						`${filePath.replace('.webm', '_correct.mp4')}`,
+						Buffer.from(webmToMp4(await readFile(filePath)))
+					);
+					return 0;
+				})
+				.then(async () => {
+					// await unlink(filePath);
+					recordedChunks = [];
+					return 0;
+				});
 		}
-
-		recordedChunks = [];
 	};
 
 	// function that allows the user to select video source
