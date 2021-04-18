@@ -8,7 +8,8 @@ body {
 	position: relative;
 	color: white;
 	height: 100vh;
-	background: linear-gradient(120.96deg, #c31432, #240b36);
+	/*background: linear-gradient(120.96deg, #c31432, #240b36);*/
+	background: linear-gradient(120.96deg, #0575e6, #021b79);
 	overflow-y: hidden;
 	display: flex;
 	justify-content: center;
@@ -51,10 +52,17 @@ a:hover {
 }
 
 .ToTheLeftElement {
-	display: flex;
-	justify-content: center;
 	align-items: flex-start;
 }
 
 .SettingsPage {
+}
+
+#SettingsForm div {
+	margin-bottom: 0.5em;
+}
+
+#SettingsForm label {
+	display: inline-block !important;
+	width: 65%;
 }
