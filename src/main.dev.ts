@@ -71,13 +71,14 @@ const createWindow = async () => {
 		show: true,
 		width: 1024,
 		height: 728,
+		frame: true,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
 		},
 	});
-
+	// mainWindow.setMenu(null);
 	mainWindow.loadURL(`file://${__dirname}/index.html`);
 
 	// @TODO: Use 'ready-to-show' event

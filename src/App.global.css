@@ -19,8 +19,12 @@ body {
 	width: calc(100% / 1.9);
 }
 
+.linkBtn {
+	margin: 0 !important;
+}
+
 button:hover {
-	transform: scale(1.05);
+	transform: scale(1.03);
 }
 
 li {
@@ -39,9 +43,18 @@ a:hover {
 	text-decoration: none;
 }
 
-.App {
+.CenterElement {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 20px 0;
+	margin: 10px 0;
+}
+
+.ToTheLeftElement {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+.SettingsPage {
 }

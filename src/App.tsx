@@ -1,9 +1,11 @@
 /* eslint-disable global-require */
 import React, { useRef, useState } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route, HashRouter, Link } from 'react-router-dom';
+
 import './App.global.css';
 import Header from './components/Header';
 import Button from './components/Button';
+import Settings from './Settings';
 
 const App = () => {
 	const [sourceName, setSourceName] = useState('Select video source');
@@ -88,14 +90,16 @@ const App = () => {
 				const stream = await navigator.mediaDevices.getUserMedia(
 					constraints as MediaStreamConstraints
 				);
+
 				if (
 					videoRef !== undefined &&
 					videoRef.current !== undefined &&
 					videoRef !== null &&
-					videoRef.current !== null
+					videoRef.current !== null &&
+					videoRef.current.play() !== undefined
 				) {
 					videoRef.current.srcObject = stream;
-					videoRef.current.play();
+					videoRef.current.oncanplay = videoRef.current.play;
 				}
 
 				const options = { mimeType: 'video/webm; codecs=H264' };
@@ -133,20 +137,26 @@ const App = () => {
 
 	return (
 		<>
-			<Header />
-			<div className="App">
+			<Header text="Unidestroinator" />
+			<div className="CenterElement">
 				<video ref={videoRef} id="videoPreview" muted />
 			</div>
-			<h5 className="App">{sourceName}</h5>
-			<div className="App">
+			<h5 className="CenterElement">{sourceName}</h5>
+			<div className="CenterElement">
 				<Button
 					id="recordBtn"
 					text={recordBtnText}
 					onClick={onRecordClick}
 				/>
-				<Button id="settingsBtn" text="Settings" />
+				<Link to="/settings">
+					<Button
+						id="settingsBtn"
+						className="linkBtn"
+						text="Settings"
+					/>
+				</Link>
 			</div>
-			<div className="App">
+			<div className="CenterElement">
 				<Button
 					id="selectSourceBtn"
 					text="Select video source"
@@ -159,10 +169,11 @@ const App = () => {
 
 export default function Application() {
 	return (
-		<Router>
+		<HashRouter>
 			<Switch>
+				<Route path="/settings" component={Settings} />
 				<Route path="/" component={App} />
 			</Switch>
-		</Router>
+		</HashRouter>
 	);
 }
