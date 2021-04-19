@@ -44,11 +44,28 @@ a:hover {
 	text-decoration: none;
 }
 
+.CenterContainer {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10px 0;
+}
+
 .CenterElement {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	margin: 10px 0;
+}
+
+#CenterForm {
+	margin: 0 auto;
+	display: inline-flex !important;
+	width: 10em !important;
+}
+
+#CenterFormBtn {
+	margin: 0 auto;
 }
 
 .ToTheLeftElement {
@@ -58,11 +75,26 @@ a:hover {
 .SettingsPage {
 }
 
+#SettingsForm {
+	background-color: rgba(0, 0, 0, 0);
+	border: 0;
+	display: flex;
+	flex-direction: column;
+}
+
 #SettingsForm div {
+	display: inline-flex;
+	justify-content: space-between;
+	width: 40em;
 	margin-bottom: 0.5em;
 }
 
 #SettingsForm label {
-	display: inline-block !important;
+	color: #ffffff;
+	font-size: 1.3em;
 	width: 65%;
+}
+#SettingsForm input[type='checkbox'] {
+	margin-top: 0.7em;
+	outline-color: #cccccc;
 }

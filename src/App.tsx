@@ -1,8 +1,9 @@
 /* eslint-disable global-require */
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Switch, Route, HashRouter, Link } from 'react-router-dom';
 
 import './App.global.css';
+import settings from 'electron-settings';
 import Header from './components/Header';
 import Button from './components/Button';
 import Settings from './Settings';
@@ -12,6 +13,8 @@ const App = () => {
 	const [recordBtnText, setRecordBtnText] = useState('Record');
 	const [isRecording, setIsRecording] = useState(true);
 	const [recorder, setRecorder] = useState<MediaRecorder>();
+	const [appNameVisible, setAppNameVisible] = useState(false);
+	const [deleteFileOnConverted, setDeleteFileOnConverted] = useState(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
 
 	const { desktopCapturer, remote } = require('electron');
@@ -20,6 +23,22 @@ const App = () => {
 	const webmToMp4 = require('webm-to-mp4');
 	let mediaRecorder: MediaRecorder;
 	let recordedChunks: BlobPart[] = [];
+
+	const loadSettings = async () => {
+		setAppNameVisible(
+			((await settings.get(
+				'windowDetails.appNameOnHomepage'
+			)) as unknown) as boolean
+		);
+
+		setDeleteFileOnConverted(
+			((await settings.get('delete.onConverted')) as unknown) as boolean
+		);
+	};
+
+	useEffect(() => {
+		loadSettings();
+	});
 
 	const handleDataAvailable = (e: { data: BlobPart }) => {
 		recordedChunks.push(e.data);
@@ -48,7 +67,9 @@ const App = () => {
 					return 0;
 				})
 				.then(async () => {
-					// await unlink(filePath);
+					if (deleteFileOnConverted) {
+						await unlink(filePath);
+					}
 					recordedChunks = [];
 					return 0;
 				});
@@ -137,7 +158,7 @@ const App = () => {
 
 	return (
 		<>
-			<Header text="Unidestroinator" />
+			{appNameVisible ? <Header text="Unidestroinator" /> : null}
 			<div className="CenterElement">
 				<video ref={videoRef} id="videoPreview" muted />
 			</div>

@@ -78,7 +78,7 @@ const createWindow = async () => {
 			enableRemoteModule: true,
 		},
 	});
-	// mainWindow.setMenu(null);
+
 	mainWindow.loadURL(`file://${__dirname}/index.html`);
 
 	// @TODO: Use 'ready-to-show' event
@@ -101,6 +101,7 @@ const createWindow = async () => {
 
 	const menuBuilder = new MenuBuilder(mainWindow);
 	menuBuilder.buildMenu();
+	mainWindow.setAutoHideMenuBar(true);
 
 	// Open urls in the user's browser
 	mainWindow.webContents.on('new-window', (event, url) => {
