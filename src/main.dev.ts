@@ -71,6 +71,7 @@ const createWindow = async () => {
 		show: true,
 		width: 1024,
 		height: 728,
+		frame: true,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
 			nodeIntegration: true,
@@ -100,6 +101,7 @@ const createWindow = async () => {
 
 	const menuBuilder = new MenuBuilder(mainWindow);
 	menuBuilder.buildMenu();
+	mainWindow.setAutoHideMenuBar(true);
 
 	// Open urls in the user's browser
 	mainWindow.webContents.on('new-window', (event, url) => {
