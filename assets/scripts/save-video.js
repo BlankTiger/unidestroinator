@@ -1,5 +1,5 @@
 const { writeFile, readFile, unlink } = require('fs').promises;
-const webmToMp4 = require('webm-to-mp4');
+const webmToMp4 = require('./webm-to-mp4');
 
 onmessage = async (e) => {
 	const blob = new Blob(e.data[1], {
