@@ -46,7 +46,7 @@ const installExtensions = async () => {
 	return installer
 		.default(
 			extensions.map((name) => installer[name]),
-			forceDownload
+			{ forceDownload, loadExtensionOptions: { allowFileAccess: true } }
 		)
 		.catch(console.log);
 };
@@ -71,10 +71,14 @@ const createWindow = async () => {
 		show: true,
 		width: 1024,
 		height: 728,
+		frame: true,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
+			nodeIntegrationInWorker: true,
+			// temp: changed for extensions to work
+			contextIsolation: false,
 		},
 	});
 
@@ -100,6 +104,7 @@ const createWindow = async () => {
 
 	const menuBuilder = new MenuBuilder(mainWindow);
 	menuBuilder.buildMenu();
+	mainWindow.setAutoHideMenuBar(true);
 
 	// Open urls in the user's browser
 	mainWindow.webContents.on('new-window', (event, url) => {
@@ -109,7 +114,7 @@ const createWindow = async () => {
 
 	// Remove this if your app does not use auto updates
 	// eslint-disable-next-line
-  new AppUpdater();
+    // new AppUpdater();
 };
 
 /**

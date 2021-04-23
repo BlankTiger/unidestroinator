@@ -1,9 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ id = '', text = '', onClick = () => {} }) => {
+const Button = ({
+	id = '',
+	className = '',
+	text = '',
+	onClick = () => {},
+	disabled = false,
+}) => {
 	return (
-		<button id={id} onClick={onClick} type="button">
+		<button
+			id={id}
+			className={className}
+			onClick={onClick}
+			disabled={disabled}
+			type="button"
+		>
 			{text}
 		</button>
 	);
@@ -11,14 +23,18 @@ const Button = ({ id = '', text = '', onClick = () => {} }) => {
 
 Button.propTypes = {
 	id: PropTypes.string,
+	className: PropTypes.string,
 	text: PropTypes.string,
 	onClick: PropTypes.func,
+	disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
 	id: '',
+	className: '',
 	text: 'BtnText',
 	onClick: () => {},
+	disabled: false,
 };
 
 export default Button;

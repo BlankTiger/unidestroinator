@@ -1,6 +1,6 @@
 {
   "name": "unidestroinator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "productName": "unidestroinator",
   "description": "App that allows the user to skip online classes while not missing out on the information given on them",
   "scripts": {
@@ -83,7 +83,13 @@
       "output": "release"
     },
     "extraResources": [
-      "./assets/**"
+      {
+        "from": "./assets/",
+        "to": "assets",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "publish": {
       "provider": "github",
@@ -105,7 +111,14 @@
   "bugs": {
     "url": "https://github.com/BlankTiger/unidestroinator/issues"
   },
-  "keywords": ["remote learning", "remote", "learning", "recording", "record", "lectures"],
+  "keywords": [
+    "remote learning",
+    "remote",
+    "learning",
+    "recording",
+    "record",
+    "lectures"
+  ],
   "homepage": "https://github.com/BlankTiger/unidestroinator",
   "jest": {
     "testURL": "http://localhost/",
@@ -229,8 +242,10 @@
   },
   "dependencies": {
     "@types/dom-mediacapture-record": "^1.0.7",
+    "caniuse-lite": "^1.0.30001210",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
+    "electron-settings": "^4.0.2",
     "electron-updater": "^4.3.4",
     "history": "^5.0.0",
     "mini.css": "^3.0.1",
