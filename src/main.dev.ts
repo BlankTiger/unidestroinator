@@ -76,6 +76,7 @@ const createWindow = async () => {
 		webPreferences: {
 			nodeIntegration: true,
 			enableRemoteModule: true,
+			nodeIntegrationInWorker: true,
 			// temp: changed for extensions to work
 			contextIsolation: false,
 		},
@@ -113,7 +114,7 @@ const createWindow = async () => {
 
 	// Remove this if your app does not use auto updates
 	// eslint-disable-next-line
-  new AppUpdater();
+    // new AppUpdater();
 };
 
 /**

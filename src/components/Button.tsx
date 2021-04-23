@@ -1,9 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Button = ({ id = '', className = '', text = '', onClick = () => {} }) => {
+const Button = ({
+	id = '',
+	className = '',
+	text = '',
+	onClick = () => {},
+	disabled = false,
+}) => {
 	return (
-		<button id={id} className={className} onClick={onClick} type="button">
+		<button
+			id={id}
+			className={className}
+			onClick={onClick}
+			disabled={disabled}
+			type="button"
+		>
 			{text}
 		</button>
 	);
@@ -14,6 +26,7 @@ Button.propTypes = {
 	className: PropTypes.string,
 	text: PropTypes.string,
 	onClick: PropTypes.func,
+	disabled: PropTypes.bool,
 };
 
 Button.defaultProps = {
@@ -21,6 +34,7 @@ Button.defaultProps = {
 	className: '',
 	text: 'BtnText',
 	onClick: () => {},
+	disabled: false,
 };
 
 export default Button;

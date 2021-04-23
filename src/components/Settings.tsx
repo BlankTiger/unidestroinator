@@ -1,10 +1,10 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useRef, useEffect } from 'react';
-import './App.global.css';
+import '../App.global.css';
 import { Link } from 'react-router-dom';
 import settings from 'electron-settings';
-import Button from './components/Button';
-import Header from './components/Header';
+import Button from './Button';
+import Header from './Header';
 
 const Settings = () => {
 	const deleteFileCheckboxRef = useRef<HTMLInputElement>(null);

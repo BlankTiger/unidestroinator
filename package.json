@@ -1,6 +1,6 @@
 {
   "name": "unidestroinator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "productName": "unidestroinator",
   "description": "App that allows the user to skip online classes while not missing out on the information given on them",
   "scripts": {
@@ -83,7 +83,13 @@
       "output": "release"
     },
     "extraResources": [
-      "./assets/**"
+      {
+        "from": "./assets/",
+        "to": "assets",
+        "filter": [
+          "**/*"
+        ]
+      }
     ],
     "publish": {
       "provider": "github",

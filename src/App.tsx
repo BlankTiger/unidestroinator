@@ -1,12 +1,27 @@
 /* eslint-disable global-require */
 import React, { useRef, useState, useEffect } from 'react';
 import { Switch, Route, HashRouter, Link } from 'react-router-dom';
-
 import './App.global.css';
 import settings from 'electron-settings';
+import path from 'path';
+import { remote } from 'electron';
 import Header from './components/Header';
 import Button from './components/Button';
-import Settings from './Settings';
+import Settings from './components/Settings';
+
+const { getAppPath } = remote.app;
+
+const IS_PROD = process.env.NODE_ENV === 'production';
+const binariesPath = IS_PROD
+	? path.join(
+			path.dirname(getAppPath()),
+			'..',
+			'./Resources',
+			'./assets',
+			'./scripts'
+	  )
+	: path.join(__dirname, '..', './assets', './scripts');
+const pathToWorker = path.resolve(path.join(binariesPath, './save-video.js'));
 
 const App = () => {
 	const [sourceName, setSourceName] = useState('Select video source');
@@ -17,10 +32,8 @@ const App = () => {
 	const [deleteFileOnConverted, setDeleteFileOnConverted] = useState(false);
 	const videoRef = useRef<HTMLVideoElement>(null);
 
-	const { desktopCapturer, remote } = require('electron');
-	const { writeFile, readFile, unlink } = require('fs').promises;
+	const { desktopCapturer } = require('electron');
 	const { dialog, Menu } = remote;
-	const webmToMp4 = require('webm-to-mp4');
 	let mediaRecorder: MediaRecorder;
 	let recordedChunks: BlobPart[] = [];
 
@@ -45,35 +58,19 @@ const App = () => {
 	};
 
 	const handleStop = async () => {
-		const blob = new Blob(recordedChunks, {
-			type: 'video/webm; codecs=H264',
-		});
-
-		const buffer = Buffer.from(await blob.arrayBuffer());
-
+		const worker = new Worker(pathToWorker);
 		const { filePath } = await dialog.showSaveDialog({
 			buttonLabel: 'Save video',
 			defaultPath: `vid-${Date.now()}.webm`,
 			filters: [{ name: 'Movies', extensions: ['webm'] }],
 		});
 
-		if (filePath !== '') {
-			await writeFile(filePath, Buffer.from(buffer))
-				.then(async () => {
-					await writeFile(
-						`${filePath.replace('.webm', '_correct.mp4')}`,
-						Buffer.from(webmToMp4(await readFile(filePath)))
-					);
-					return 0;
-				})
-				.then(async () => {
-					if (deleteFileOnConverted) {
-						await unlink(filePath);
-					}
-					recordedChunks = [];
-					return 0;
-				});
-		}
+		worker.postMessage([filePath, recordedChunks, deleteFileOnConverted]);
+		worker.onmessage = (e) => {
+			if (e.data === 'done') {
+				recordedChunks = [];
+			}
+		};
 	};
 
 	// function that allows the user to select video source
@@ -150,7 +147,7 @@ const App = () => {
 		setRecordBtnText(isRecording ? 'Stop' : 'Record');
 		setIsRecording(!isRecording);
 		if (isRecording && recorder !== undefined) {
-			recorder.start(50);
+			recorder.start();
 		} else if (recorder !== undefined) {
 			recorder.stop();
 		}
@@ -171,6 +168,7 @@ const App = () => {
 				/>
 				<Link to="/settings">
 					<Button
+						disabled={!isRecording}
 						id="settingsBtn"
 						className="linkBtn"
 						text="Settings"
@@ -179,6 +177,7 @@ const App = () => {
 			</div>
 			<div className="CenterElement">
 				<Button
+					disabled={!isRecording}
 					id="selectSourceBtn"
 					text="Select video source"
 					onClick={selectVideoSource}
