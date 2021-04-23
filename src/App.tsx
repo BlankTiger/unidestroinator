@@ -27,6 +27,7 @@ const App = () => {
 	const [sourceName, setSourceName] = useState('Select video source');
 	const [recordBtnText, setRecordBtnText] = useState('Record');
 	const [isRecording, setIsRecording] = useState(true);
+	const [isSaved, setIsSaved] = useState(true);
 	const [recorder, setRecorder] = useState<MediaRecorder>();
 	const [appNameVisible, setAppNameVisible] = useState(false);
 	const [deleteFileOnConverted, setDeleteFileOnConverted] = useState(false);
@@ -69,6 +70,7 @@ const App = () => {
 		worker.onmessage = (e) => {
 			if (e.data === 'done') {
 				recordedChunks = [];
+				setIsSaved(true);
 			}
 		};
 	};
@@ -149,6 +151,7 @@ const App = () => {
 		if (isRecording && recorder !== undefined) {
 			recorder.start();
 		} else if (recorder !== undefined) {
+			setIsSaved(false);
 			recorder.stop();
 		}
 	};
@@ -162,13 +165,14 @@ const App = () => {
 			<h5 className="CenterElement">{sourceName}</h5>
 			<div className="CenterElement">
 				<Button
+					disabled={!isSaved}
 					id="recordBtn"
 					text={recordBtnText}
 					onClick={onRecordClick}
 				/>
 				<Link to="/settings">
 					<Button
-						disabled={!isRecording}
+						disabled={!isRecording || !isSaved}
 						id="settingsBtn"
 						className="linkBtn"
 						text="Settings"
@@ -177,7 +181,7 @@ const App = () => {
 			</div>
 			<div className="CenterElement">
 				<Button
-					disabled={!isRecording}
+					disabled={!isRecording || !isSaved}
 					id="selectSourceBtn"
 					text="Select video source"
 					onClick={selectVideoSource}

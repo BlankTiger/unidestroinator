@@ -10,9 +10,10 @@ onmessage = async (e) => {
 
 	if (e.data[0] !== '') {
 		await writeFile(e.data[0], Buffer.from(buffer))
+			.then(postMessage('done'))
 			.then(async () => {
 				await writeFile(
-					`${e.data[0].replace('.webm', '_correct.mp4')}`,
+					`${e.data[0].replace('.webm', '.mp4')}`,
 					Buffer.from(webmToMp4(await readFile(e.data[0])))
 				);
 				return 0;
@@ -24,5 +25,4 @@ onmessage = async (e) => {
 				return 0;
 			});
 	}
-	postMessage('done');
 };
