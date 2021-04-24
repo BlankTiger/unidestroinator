@@ -8,19 +8,14 @@ import { remote } from 'electron';
 import Header from './components/Header';
 import Button from './components/Button';
 import Settings from './components/Settings';
+import settingsDefault from './scripts/settings-default';
 
 const { getAppPath } = remote.app;
 
 const IS_PROD = process.env.NODE_ENV === 'production';
 const binariesPath = IS_PROD
-	? path.join(
-			path.dirname(getAppPath()),
-			'..',
-			'./Resources',
-			'./assets',
-			'./scripts'
-	  )
-	: path.join(__dirname, '..', './assets', './scripts');
+	? path.join(path.dirname(getAppPath()), '..', './Resources', './scripts')
+	: path.join(__dirname, '..', './src', './scripts', './prodscripts');
 const pathToWorker = path.resolve(path.join(binariesPath, './save-video.js'));
 
 const App = () => {
@@ -39,6 +34,7 @@ const App = () => {
 	let recordedChunks: BlobPart[] = [];
 
 	const loadSettings = async () => {
+		await settingsDefault();
 		setAppNameVisible(
 			((await settings.get(
 				'windowDetails.appNameOnHomepage'

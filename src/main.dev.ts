@@ -14,6 +14,7 @@ import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+import settings from 'electron-settings';
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
@@ -25,6 +26,8 @@ export default class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let windowWidth = 1024;
+let windowHeight = 800;
 
 if (process.env.NODE_ENV === 'production') {
 	const sourceMapSupport = require('source-map-support');
@@ -37,6 +40,13 @@ if (
 ) {
 	require('electron-debug')();
 }
+
+const loadSettings = async () => {
+	if (await settings.has('windowDetails')) {
+		windowWidth = Number(await settings.get('windowDetails.width'));
+		windowHeight = Number(await settings.get('windowDetails.height'));
+	}
+};
 
 const installExtensions = async () => {
 	const installer = require('electron-devtools-installer');
@@ -67,10 +77,12 @@ const createWindow = async () => {
 		return path.join(RESOURCES_PATH, ...paths);
 	};
 
+	await loadSettings();
+
 	mainWindow = new BrowserWindow({
 		show: true,
-		width: 1024,
-		height: 728,
+		width: windowWidth,
+		height: windowHeight,
 		frame: true,
 		icon: getAssetPath('icon.png'),
 		webPreferences: {
@@ -114,7 +126,7 @@ const createWindow = async () => {
 
 	// Remove this if your app does not use auto updates
 	// eslint-disable-next-line
-    new AppUpdater();
+    // new AppUpdater();
 };
 
 /**

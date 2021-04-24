@@ -1,6 +1,6 @@
 {
   "name": "unidestroinator",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "productName": "unidestroinator",
   "description": "App that allows the user to skip online classes while not missing out on the information given on them",
   "scripts": {
@@ -19,7 +19,7 @@
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
       "cross-env NODE_ENV=development eslint --cache"
-    ],
+],
     "{*.json,.{babelrc,eslintrc,prettierrc}}": [
       "prettier --ignore-path .eslintignore --parser json --write"
     ],
@@ -84,8 +84,8 @@
     },
     "extraResources": [
       {
-        "from": "./assets/",
-        "to": "assets",
+        "from": "./src/scripts/prodscripts/",
+        "to": "scripts/",
         "filter": [
           "**/*"
         ]
