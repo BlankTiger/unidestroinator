@@ -8,7 +8,6 @@ import Header from './Header';
 
 const Settings = () => {
 	const deleteFileCheckboxRef = useRef<HTMLInputElement>(null);
-	const resolutionDropdownRef = useRef<HTMLSelectElement>(null);
 	const windowWidthRef = useRef<HTMLInputElement>(null);
 	const windowHeightRef = useRef<HTMLInputElement>(null);
 	const appNameVisibleRef = useRef<HTMLInputElement>(null);
@@ -16,15 +15,10 @@ const Settings = () => {
 	const loadSettings = async () => {
 		if (
 			deleteFileCheckboxRef.current !== null &&
-			resolutionDropdownRef.current !== null &&
 			windowWidthRef.current !== null &&
 			windowHeightRef.current !== null &&
 			appNameVisibleRef.current !== null
 		) {
-			resolutionDropdownRef.current.selectedIndex = (await settings.get(
-				'recordingResolution.index'
-			)) as number;
-
 			windowHeightRef.current.value = (await settings.get(
 				'windowDetails.height'
 			)) as string;
@@ -46,19 +40,10 @@ const Settings = () => {
 	const saveSettings = async () => {
 		if (
 			deleteFileCheckboxRef.current !== null &&
-			resolutionDropdownRef.current !== null &&
 			windowWidthRef.current !== null &&
 			windowHeightRef.current !== null &&
 			appNameVisibleRef.current !== null
 		) {
-			await settings.set('recordingResolution', {
-				value:
-					resolutionDropdownRef.current.options[
-						resolutionDropdownRef.current.selectedIndex
-					].value,
-				index: resolutionDropdownRef.current.selectedIndex,
-			});
-
 			await settings.set('windowDetails', {
 				height: windowHeightRef.current.value,
 				width: windowWidthRef.current.value,
@@ -69,9 +54,6 @@ const Settings = () => {
 				onConverted: deleteFileCheckboxRef.current.checked,
 			});
 
-			const selectedResolution = await settings.get(
-				'recordingResolution.value'
-			);
 			const windowWidth = await settings.get('windowDetails.width');
 			const windowHeight = await settings.get('windowDetails.height');
 			const deleteOnCoverted = await settings.get('delete.onConverted');
@@ -80,7 +62,7 @@ const Settings = () => {
 			);
 
 			console.log(
-				`${selectedResolution}, ${windowWidth}x${windowHeight}, ${deleteOnCoverted}, ${showAppName}`
+				`${windowWidth}x${windowHeight}, ${deleteOnCoverted}, ${showAppName}`
 			);
 		}
 	};
@@ -95,14 +77,6 @@ const Settings = () => {
 			</div>
 			<hr />
 			<form id="SettingsForm">
-				<div>
-					<label>Recording resolution:</label>
-					<select ref={resolutionDropdownRef}>
-						<option value="1280">1280x720</option>
-						<option value="1024">1024x768</option>
-						<option value="852">852x480</option>
-					</select>
-				</div>
 				<div>
 					<label>Window size at the start of the program</label>
 				</div>
