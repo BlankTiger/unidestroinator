@@ -108,19 +108,11 @@ const Settings = () => {
 				</div>
 				<div>
 					<label>Width:</label>
-					<input
-						ref={windowWidthRef}
-						type="number"
-						defaultValue={1024}
-					/>
+					<input ref={windowWidthRef} type="number" />
 				</div>
 				<div>
 					<label>Height:</label>
-					<input
-						ref={windowHeightRef}
-						type="number"
-						defaultValue={728}
-					/>
+					<input ref={windowHeightRef} type="number" />
 				</div>
 				<div>
 					<label>Delete webm file after conversion:</label>

@@ -84,7 +84,7 @@
     },
     "extraResources": [
       {
-        "from": "./src/scripts/",
+        "from": "./src/scripts/prodscripts/",
         "to": "scripts/",
         "filter": [
           "**/*"
