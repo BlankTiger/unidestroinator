@@ -62,16 +62,25 @@ const App = () => {
 			filters: [{ name: 'Movies', extensions: ['webm'] }],
 		});
 
-		worker.postMessage([filePath, recordedChunks, deleteFileOnConverted]);
-		worker.onmessage = (e) => {
-			if (e.data === 'done') {
-				recordedChunks = [];
-				setIsSaved(true);
-			}
-		};
+		if (filePath === '') {
+			setIsSaved(true);
+			// TODO: add popup saying that you have to restart recording for it to save,
+			// because this will only execute upon failure of clicking save in the dialog window
+		} else {
+			worker.postMessage([
+				filePath,
+				recordedChunks,
+				deleteFileOnConverted,
+			]);
+			worker.onmessage = (e) => {
+				if (e.data === 'done') {
+					recordedChunks = [];
+					setIsSaved(true);
+				}
+			};
+		}
 	};
 
-	// function that allows the user to select video source
 	const selectVideoSource = async () => {
 		async function getVideoSources() {
 			const inputSources = await desktopCapturer.getSources({
