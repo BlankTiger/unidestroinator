@@ -55,10 +55,14 @@ const App = () => {
 	};
 
 	const handleStop = async () => {
-		const worker = new Worker(pathToWorker);
+		const date = new Date();
 		const { filePath } = await dialog.showSaveDialog({
 			buttonLabel: 'Save video',
-			defaultPath: `vid-${Date.now()}.webm`,
+			defaultPath: `vid-${date
+				.toISOString()
+				.slice(0, 10)
+				.replace('-', '')
+				.replace('-', '')}-${String(Date.now()).substring(0, 10)}.webm`,
 			filters: [{ name: 'Movies', extensions: ['webm'] }],
 		});
 
@@ -67,6 +71,7 @@ const App = () => {
 			// TODO: add popup saying that you have to restart recording for it to save,
 			// because this will only execute upon failure of clicking save in the dialog window
 		} else {
+			const worker = new Worker(pathToWorker);
 			worker.postMessage([
 				filePath,
 				recordedChunks,
