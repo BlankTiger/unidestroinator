@@ -17,10 +17,9 @@ const binariesPath = IS_PROD
 			path.dirname(getAppPath()),
 			'..',
 			'./Resources',
-			'./assets',
 			'./scripts'
 	  )
-	: path.join(__dirname, '..', './assets', './scripts');
+	: path.join(__dirname, '..', './src', './scripts');
 const pathToWorker = path.resolve(path.join(binariesPath, './save-video.js'));
 
 const App = () => {
