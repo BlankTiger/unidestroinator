@@ -120,8 +120,7 @@ const App = () => {
 					videoRef !== undefined &&
 					videoRef.current !== undefined &&
 					videoRef !== null &&
-					videoRef.current !== null &&
-					videoRef.current.play() !== undefined
+					videoRef.current !== null
 				) {
 					videoRef.current.srcObject = stream;
 					videoRef.current.oncanplay = videoRef.current.play;
