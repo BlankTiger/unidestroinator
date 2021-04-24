@@ -114,9 +114,10 @@ const createWindow = async () => {
 		mainWindow = null;
 	});
 
+	mainWindow.menuBarVisible = false;
+	mainWindow.setAutoHideMenuBar(true);
 	const menuBuilder = new MenuBuilder(mainWindow);
 	menuBuilder.buildMenu();
-	mainWindow.setAutoHideMenuBar(true);
 
 	// Open urls in the user's browser
 	mainWindow.webContents.on('new-window', (event, url) => {
