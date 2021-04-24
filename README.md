@@ -36,6 +36,9 @@ yarn package
 
 Main feature that's planned is an automation of entering into zoom/teams calls and recording them according either to a user specified schedule, or to a schedule generated automatically by scanning email for invitations to zoom calls.
 
+## Icons
+<div>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+
 ## Donations
 
 [PayPal](paypal.me/maciejurban)
