@@ -15,9 +15,9 @@ body {
 	align-items: center;
 }
 
-#root {
+/* #root {
 	animation: slidein 0.5s ease-out;
-}
+} */
 
 #videoPreview {
 	width: calc(100% / 1.9);
@@ -102,13 +102,15 @@ a:hover {
 	outline-color: #cccccc;
 }
 
-@keyframes slidein {
+/* @keyframes slidein {
 	0% {
 		transform: translateY(5px);
-		opacity: 25%;
+		opacity: 0.0;
+		filter: alpha(opacity=0);
 	}
 	100% {
 		transform: translateY(0px);
-		opacity: 100%;
+		opacity: 0.99;
+		filger: alpha(opacity=99);
 	}
-}
+} */
